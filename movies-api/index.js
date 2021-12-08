@@ -7,10 +7,6 @@ import genreRouter from './api/genres';
 import usersRouter from './api/users';
 
 dotenv.config();
-
-const app = express();
-
-const port = process.env.PORT;
 const errHandler = (err, req, res, next) => {
   /* if the error in development then send stack trace to display whole error,
   if it's in production then just send error message  */
@@ -19,6 +15,10 @@ const errHandler = (err, req, res, next) => {
   }
   res.status(500).send(`Hey!! You caught the error 👍👍. Here's the details: ${err.stack} `);
 };
+const app = express();
+
+const port = process.env.PORT;
+
 app.use(express.json());
 
 app.use('/api/genres', genreRouter);
