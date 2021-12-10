@@ -5,6 +5,7 @@ import { PublicPage, Movies, Profile, HomePage } from "./pages";
 import LoginPage from "./loginPage";
 import AuthProvider from "./authContext";
 import PrivateRoute from "./privateRoute";
+import MovieProvider from "./moviesContext";
 import AuthHeader from "./authHeader";
 import SignUpPage from "./signUpPage";
 
@@ -27,6 +28,7 @@ const App = () => {
             <Link to="/profile">Profile</Link>
           </li>
         </ul>
+        <MovieProvider>
         <Switch>
           <Route path="/public" component={PublicPage} />
           <Route exact path="/" component={HomePage} />
@@ -36,6 +38,7 @@ const App = () => {
           <Route path="/signup" component={SignUpPage} />
           <Redirect from="*" to="/" />
         </Switch>
+        </MovieProvider>
       </AuthProvider>
     </BrowserRouter>
   );
