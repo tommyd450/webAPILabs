@@ -184,4 +184,3 @@ export const movieDetails = {
     "vote_average": 8.3,
     "vote_count": 2257
 };
-

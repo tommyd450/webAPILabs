@@ -1,7 +1,11 @@
 import express from 'express';
-import { movies, movieReviews, movieDetails } from './movieData';
+import {  movieReviews,  } from './movieData';
+
 import {
-    getUpcomingMovies
+    getUpcomingMovies,
+    getMovieImages,
+    getMovies,
+    getMovie
   } from '../tmdb-api';
 import uniqid from 'uniqid';
 import movieModel from './movieModel';
@@ -12,7 +16,7 @@ router.get('/', asyncHandler(async (req, res) => {
     let { page = 1, limit = 10 } = req.query; // destructure page and limit and set default values
     [page, limit] = [+page, +limit]; //trick to convert to numeric (req.query will contain string values)
 
-    const totalDocumentsPromise = movieModel.estimatedDocumentCount(); //Kick off async calls
+    const totalDocumentsPromise = getMovies(); //Kick off async calls
     const moviesPromise = movieModel.find().limit(limit).skip((page - 1) * limit);
 
     const totalDocuments = await totalDocumentsPromise; //wait for the above promises to be fulfilled
@@ -24,15 +28,14 @@ router.get('/', asyncHandler(async (req, res) => {
 }));
 
 // Get movie details
+
 router.get('/:id', asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
-    const movie = await movieModel.findByMovieDBId(id);
-    if (movie) {
+    const movie = await getMovie(id);
         res.status(200).json(movie);
-    } else {
-        res.status(404).json({message: 'The resource you requested could not be found.', status_code: 404});
-    }
+    
 }));
+
 
 router.get('/:id/reviews', (req, res) => {
     const id = parseInt(req.params.id);
@@ -71,4 +74,21 @@ router.get('/tmdb/upcoming', asyncHandler( async(req, res) => {
     res.status(200).json(upcomingMovies);
   }));
 
+//Get Images
+router.get('/:id/images', asyncHandler(async(req,res) =>
+{
+    const id = parseInt(req.params.id);
+    const movieImages = await getMovieImages(id);
+    res.status(200).json(movieImages);
+}))
+
+router.get('/:id', asyncHandler(async (req, res) => {
+    const id = parseInt(req.params.id);
+    const movie = await getMovie(id);
+    if (movie) {
+        res.status(200).json(movie);
+    } else {
+        res.status(404).json({message: 'The resource you requested could not be found.', status_code: 404});
+    }
+}));
 export default router;
