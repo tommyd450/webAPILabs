@@ -181,9 +181,7 @@ export const getMovies = () => {
   
       
   
-      export const getCredits = (args) => {
-        const [, idPart] = args.queryKey;
-        const { id } = idPart;
+      export const getCredits = (id) => {
         return fetch(
           `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${process.env.TMDB_KEY}&language=en-US`
         ).then((response) => {
@@ -199,9 +197,7 @@ export const getMovies = () => {
   
   
   
-      export const getPerson = (args) => {
-        const [, idPart] = args.queryKey;
-        const { id } = idPart;
+      export const getPerson = (id) => {
         return fetch(
           `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.TMDB_KEY}&language=en-US`
         ).then((response) => {
@@ -215,9 +211,8 @@ export const getMovies = () => {
         });
       };
   
-      export const getPersonCredits = (args) => {
-        const [, idPart] = args.queryKey;
-        const { id } = idPart;
+      export const getPersonCredits = (id) => {
+        
         return fetch(
           `https://api.themoviedb.org/3/person/${id}/movie_credits?api_key=${process.env.TMDB_KEY}&language=en-US`
         ).then((response) => {

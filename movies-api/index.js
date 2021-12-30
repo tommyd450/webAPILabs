@@ -5,6 +5,7 @@ import './seedData';
 import moviesRouter from './api/movies';
 import genreRouter from './api/genres';
 import usersRouter from './api/users';
+import personRouter from './api/people'
 
 import session from 'express-session';
 import passport from './authenticate';
@@ -28,8 +29,8 @@ app.use(passport.initialize());
 
 
 app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
-app.use('/api/genres', genreRouter);
-
+app.use('/api/genres',genreRouter);
+app.use('/api/person' ,  passport.authenticate('jwt',{session: false}),personRouter)
 app.use('/api/users', usersRouter);
 app.use(errHandler);
 app.listen(port, () => {

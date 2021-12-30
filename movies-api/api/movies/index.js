@@ -5,7 +5,8 @@ import {
     getUpcomingMovies,
     getMovieImages,
     getMovies,
-    getMovie
+    getMovie,
+    getCredits
   } from '../tmdb-api';
 import uniqid from 'uniqid';
 import movieModel from './movieModel';
@@ -81,6 +82,15 @@ router.get('/:id/images', asyncHandler(async(req,res) =>
     const movieImages = await getMovieImages(id);
     res.status(200).json(movieImages);
 }))
+
+router.get('/:id/credits', asyncHandler(async(req,res) =>
+{
+    const id = parseInt(req.params.id);
+    const credits = await getCredits(id);
+    res.status(200).json(credits);
+}
+))
+
 
 router.get('/:id', asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
