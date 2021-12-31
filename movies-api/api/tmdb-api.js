@@ -83,10 +83,8 @@ export const getMovies = () => {
     });
   };
   
-  export const getTVshow = (args) =>
+  export const getTVshow = (id) =>
   {
-    const [, idPart] = args.queryKey;
-    const { id } = idPart;
   return fetch(
     `https://api.themoviedb.org/3/tv/${id}?api_key=${process.env.TMDB_KEY}&language=en-US`
   ).then((response) => {
@@ -101,9 +99,8 @@ export const getMovies = () => {
   };
   
   
-  export const getShowImages = ({ queryKey }) => {
-    const [, idPart] = queryKey;
-    const { id } = idPart;
+  export const getShowImages = (id) => {
+    
     return fetch(
       `https://api.themoviedb.org/3/tv/${id}/images?api_key=${process.env.TMDB_KEY}`
     ).then( (response) => {
