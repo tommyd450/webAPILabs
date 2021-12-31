@@ -165,11 +165,11 @@ export const getMovies = () => {
   
     export const getMovieReviews = (id) => {
       return fetch(
-        `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${process.env.TMDB_KEY}&language=en-US&page=1`
+        `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${process.env.TMDB_KEY}`
       )
         .then((res) => res.json())
         .then((json) => {
-          // console.log(json.results);
+          console.log(json.results);
           return json.results;
         });
     };
