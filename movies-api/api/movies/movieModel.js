@@ -10,7 +10,6 @@ const MovieSchema = new Schema({
   overview: { type: String },
   release_date: { type: String },
   original_title: { type: String },
-  genre_ids: [{ type: Number }],
   original_language: { type: String },
   title: { type: String },
   backdrop_path: { type: String },
@@ -34,7 +33,6 @@ const MovieSchema = new Schema({
 MovieSchema.statics.findByMovieDBId = function (id) {
   return this.findOne({ id: id });
 };
-
 
 
 
