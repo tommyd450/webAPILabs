@@ -1,9 +1,10 @@
 import express from 'express';
-import genres  from "./genreModel";
+//import genres  from "./genreModel";
+import { getGenres } from '../tmdb-api';
 
 const router = express.Router(); 
 router.get('/', async (req, res) => {
-    const users = await genres.find();
+    const users = await getGenres();
     res.status(200).json(users);
 });
 
@@ -11,7 +12,8 @@ router.get('/', async (req, res) => {
 router.get('/api/genres', (req, res) => {
     const id = parseInt(req.params.id);
     // find reviews in list
-    if (genres.id == id) {
+    const genres = getGenres(); 
+    if (genres) {
         res.status(200).json(genres);
     } else {
         res.status(404).json({

@@ -1,5 +1,5 @@
 import express from 'express';
-import {  movieReviews,  } from './movieData';
+//import {  movieReviews,  } from './movieData';
 
 import {
     getUpcomingMovies,
@@ -7,10 +7,11 @@ import {
     getMovies,
     getMovie,
     getCredits,
-    getMovieReviews
+    getMovieReviews,
+    getTrendingMovies
   } from '../tmdb-api';
-import uniqid from 'uniqid';
-import movieModel from './movieModel';
+//import uniqid from 'uniqid';
+//import movieModel from './movieModel';
 import asyncHandler from 'express-async-handler';
 //import e from 'express';
 //import { get } from 'mongoose';
@@ -39,13 +40,25 @@ router.get('/', asyncHandler(async(req,res) =>{
     res.status(200).json(movies)
 }));
 
+router.get('/trending',asyncHandler(async(req,res) => {
+    const trendingMovies = await getTrendingMovies();
+    if (trendingMovies) {
+        res.status(200).json(trendingMovies);
+    } else {
+        res.status(404).json({message: 'The resource you requested could not be found.', status_code: 404});
+    }
+}));
 
 // Get movie details
 
 router.get('/:id', asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
     const movie = await getMovie(id);
+    if (movie) {
         res.status(200).json(movie);
+    } else {
+        res.status(404).json({message: 'The resource you requested could not be found.', status_code: 404});
+    }
     
 }));
 
@@ -56,8 +69,13 @@ router.get('/:id/reviews',asyncHandler(async (req, res) => {
     console.log("Got in");
     const id = req.params.id;
     const movieReviews = await getMovieReviews(id);
+    if (movieReviews) {
+        res.status(200).json(movieReviews);
+    } else {
+        res.status(404).json({message: 'The resource you requested could not be found.', status_code: 404});
+    }
     // find reviews in list
-    res.status(200).json(movieReviews);
+
     
 }));
 
@@ -83,7 +101,14 @@ router.post('/:id/reviews', (req, res) => {
 */
 router.get('/tmdb/upcoming', asyncHandler( async(req, res) => {
     const upcomingMovies = await getUpcomingMovies();
-    res.status(200).json(upcomingMovies);
+    if(upcomingMovies)
+    {
+        res.status(200).json(upcomingMovies);
+    }
+    else 
+    {
+        res.status(404).json({message: 'The resource you requested could not be found.', status_code: 404});
+    }
   }));
 
 //Get Images

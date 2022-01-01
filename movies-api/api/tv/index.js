@@ -5,7 +5,7 @@ import {
     getShowImages,
     getTVshow,
    getTVShows,
-  
+  getTvGenres
   } from '../tmdb-api';
 //import uniqid from 'uniqid';
 //import movieModel from './movieModel';
@@ -33,6 +33,22 @@ router.get('/',asyncHandler(async(req,res)=>{
 
 }
 ));
+
+router.get('/genres',asyncHandler(async(req,res)=>{
+    const tvGenres = await getTvGenres();
+    if(tvGenres)
+    {
+        res.status(200).json(tvGenres);
+    }
+    else
+    {
+        res.status(404).json({
+            message: 'The resource you requested couldnt be found.',
+            status_code: 404
+        });
+    }
+}
+))
 
 router.get('/:id',asyncHandler(async(req,res)=> {
     const id = parseInt(req.params.id);
