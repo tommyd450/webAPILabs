@@ -30,6 +30,7 @@ const MovieSchema = new Schema({
   tagline: { type: String }
 });
 
+
 MovieSchema.statics.findByMovieDBId = function (id) {
   return this.findOne({ id: id });
 };

@@ -40,7 +40,7 @@ router.post('/',asyncHandler( async (req, res, next) => {
   }));
 
   //Add a favourite. No Error Handling Yet. Can add duplicates too!
-router.post('/:userName/favourites', asyncHandler(async (req, res) => {
+router.post('/:userName/favorites', asyncHandler(async (req, res) => {
   
   //const newFavourite = req.body.id;
   
@@ -50,12 +50,12 @@ router.post('/:userName/favourites', asyncHandler(async (req, res) => {
     console.info("Already Exists");
   }else
   {
-  await movieModel.create(req.body);
+  await movieModel.create(req.body.movie);
   }
   console.info(req.body);
   //await movieModel.push(movie);
   //await movieModel.save();
-  const check = await movieModel.findByMovieDBId(req.body.id);
+  const check = await movieModel.findByMovieDBId(req.body.movie.id);
   console.info(check);
   const user = await User.findByUserName(userName);
   await user.favourites.push(check);
@@ -63,7 +63,7 @@ router.post('/:userName/favourites', asyncHandler(async (req, res) => {
   res.status(201).json(user); 
 }));
 
-  router.get('/:userName/favourites', asyncHandler( async (req, res) => {
+  router.get('/:userName/favorites', asyncHandler( async (req, res) => {
   const userName = req.params.userName;
   const user = await User.findByUserName(userName).populate('favourites');
   res.status(200).json(user.favourites);

@@ -16,7 +16,7 @@ import asyncHandler from 'express-async-handler';
 //import { get } from 'mongoose';
 
 const router = express.Router(); 
-
+/*
 router.get('/', asyncHandler(async (req, res) => {
     let { page = 1, limit = 10 } = req.query; // destructure page and limit and set default values
     [page, limit] = [+page, +limit]; //trick to convert to numeric (req.query will contain string values)
@@ -31,14 +31,14 @@ router.get('/', asyncHandler(async (req, res) => {
 
     res.status(200).json(returnObject);
 }));
+*/
 
-/*
 router.get('/', asyncHandler(async(req,res) =>{
     
     const movies = await getMovies();
     res.status(200).json(movies)
 }));
-*/
+
 
 // Get movie details
 
